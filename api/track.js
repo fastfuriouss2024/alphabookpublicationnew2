@@ -8,8 +8,8 @@ export default async function handler(req, res) {
   try {
     const data = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
 
-    const PIXEL_ID = process.env.META_PIXEL_ID;
-    const ACCESS_TOKEN = process.env.META_CAPI_TOKEN;
+    const PIXEL_ID = 933374749599253;
+    const ACCESS_TOKEN = EAAU1hJ3yct4BS9GuXiUuLPZAzFZBuMYUNFecIVU9EasUw6KZCR9DeyL6fPZAID0UjV0n0u2NfOF9d5MPfulKB0KSA9ixkxLzetKGoY36Wu9UBvWVHrrs95q8wbhgxZAkdgWpdcIWwN7HpXhGbyTbpmkmrRZCUvHeo8ikM4RrgzFGE65Tf5ZBTJ4QPpgV5JfpNByQwZDZD;
 
     const clientIp = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
     const userAgent = req.headers['user-agent'] || '';
