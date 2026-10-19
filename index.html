@@ -53,5 +53,52 @@ src="https://www.facebook.com/tr?id=29146159244978121&ev=PageView&noscript=1"
     </section>
   </main>
   <script src="script.js"></script>
+  <!-- YAHAN SE SCRIPT COPY Karke </body> se theek pehle paste karein -->
+  <script>
+    // Aapke private link ka hash (+ ke aage ka hissa)
+    const PRIVATE_HASH = "PYh62oOtVWQwZjY9"; 
+
+    const directAppUrl = "tg://join?invite=" + PRIVATE_HASH;
+    const fallbackWebUrl = "https://t.me/+" + PRIVATE_HASH;
+
+    let triggered = false;
+
+    function handleTelegramRedirect(e) {
+      if (e) e.preventDefault();
+      if (triggered) return;
+      triggered = true;
+
+      // 1. Browser Pixel Lead Event
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead');
+      }
+
+      // 2. Vercel Backend CAPI Call (/api/track)
+      fetch('/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ source_url: window.location.href }),
+        keepalive: true
+      }).catch(() => {});
+
+      // 3. Telegram app direct open
+      setTimeout(() => {
+        window.location.href = directAppUrl;
+        setTimeout(() => {
+          window.location.href = fallbackWebUrl;
+        }, 1200);
+      }, 150);
+    }
+
+    // Jab user button par click karega
+    document.addEventListener("DOMContentLoaded", function() {
+      const btn = document.getElementById("hero-button");
+      if (btn) {
+        // Button ka href update kar do taaki deep link ban jaye
+        btn.href = directAppUrl;
+        btn.addEventListener("click", handleTelegramRedirect);
+      }
+    });
+  </script>
 </body>
 </html>
